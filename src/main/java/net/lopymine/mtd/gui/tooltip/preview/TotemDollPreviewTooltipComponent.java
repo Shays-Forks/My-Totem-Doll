@@ -27,25 +27,25 @@ public class TotemDollPreviewTooltipComponent implements TooltipComponent {
 
 	@Override
 	public int getHeight(/*? >=1.21.2 {*/TextRenderer textRenderer/*?}*/) {
-		return MyTotemDollClient.getConfig().getTagMenuTooltipSize().getSize() + 10;
+		return MyTotemDollClient.getConfig().getBetterTagMenuTooltipSize() + 10;
 	}
 
 	@Override
 	public int getWidth(TextRenderer textRenderer) {
-		return MyTotemDollClient.getConfig().getTagMenuTooltipSize().getSize();
+		return MyTotemDollClient.getConfig().getBetterTagMenuTooltipSize();
 	}
 
 	@Override
 	public void drawItems(TextRenderer textRenderer, int x, int y,/*? >=1.21.2 {*/int w, int h,/*?}*/ DrawContext context) {
 		int width = this.getWidth(textRenderer);
 		MyTotemDollConfig config = MyTotemDollClient.getConfig();
-		int sizeOriginal = config.getTagMenuTooltipSize().getSize();
+		float sizeOriginal = config.getBetterTagMenuTooltipSize();
 		float size = (sizeOriginal / 1.25F) * config.getTagMenuTooltipModelScale();
 		Text text = Text.of(this.model.getFileName());
 		int textWidth = textRenderer.getWidth(text);
 
 		int height = this.getHeight(/*? >=1.21.2 {*/textRenderer/*?}*/);
-		context.enableScissor(x, y + 10 + 4, x + width, y + height);
+		context.enableScissor(x, y + 10 + 4 + 2, x + width, y + height - 2);
 		this.data.setTempModel(this.model);
 		TotemDollRenderer.renderPreview(context, x, y + 10, width, height - 10, size, this.data);
 		context.disableScissor();

@@ -154,10 +154,10 @@ public class TotemDollRenderer {
 
 		String nickname = totemDollData.getNickname();
 
-		if (nickname != null && (nickname.equals("dinnerbone") || nickname.equals("grumm"))) {
-			matrices.translate(0.5F, 1.5F, 0.5F);
+		if (nickname != null && (nickname.equalsIgnoreCase("dinnerbone") || nickname.equalsIgnoreCase("grumm"))) {
+			matrices.translate(0.5F, 1.0F, 0.5F);
 			matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180));
-			matrices.translate(-0.5F, -1.5F, -0.5F);
+			matrices.translate(-0.5F, -1.0F, -0.5F);
 		}
 
 		matrices.push();
@@ -200,7 +200,7 @@ public class TotemDollRenderer {
 
 	private static boolean beforeDollRendered(@Nullable DollRenderContext context, ItemStack stack, TotemDollData totemDollData) {
 		boolean standardDoll = StandardTotemDollManager.getStandardDoll().equals(totemDollData);
-		if (standardDoll && (MyTotemDollClient.getConfig().isUseVanillaTotemModel() || TotemDollPlugin.work(MyTotemDollClient.getConfig().getStandardTotemDollSkinValue()))) {
+		if (standardDoll && TotemDollPlugin.work(MyTotemDollClient.getConfig().getStandardTotemDollSkinValue(), stack)) {
 			return false;
 		}
 
@@ -223,6 +223,6 @@ public class TotemDollRenderer {
 	}
 
 	public static boolean canRender(@Nullable ItemStack stack) {
-		return MyTotemDollClient.getConfig().isModEnabled() && stack != null && stack.isOf(Items.TOTEM_OF_UNDYING) && !stack.hasModdedModel();
+		return MyTotemDollClient.canProcess(stack) && !MyTotemDollClient.getConfig().isUseVanillaTotemModel() && !TotemDollPlugin.work(stack) && !stack.hasModdedModel();
 	}
 }

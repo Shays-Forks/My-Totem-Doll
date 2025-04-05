@@ -17,6 +17,7 @@ import net.lopymine.mtd.config.other.vector.Vec2i;
 import net.lopymine.mtd.doll.model.TotemDollModel;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,7 +39,11 @@ public class MyTotemDollConfig {
 			optional("standard_doll_model_arms_type", TotemDollArmsType.WIDE, TotemDollArmsType.CODEC, MyTotemDollConfig::getStandardTotemDollArmsType),
 			optional("tag_button_pos", new Vec2i(155, 48), Vec2i.CODEC, MyTotemDollConfig::getTagButtonPos),
 			optional("use_vanilla_totem_model", false, Codec.BOOL, MyTotemDollConfig::isUseVanillaTotemModel),
-			optional("tag_menu_tooltip_size", TooltipSize.X1, TooltipSize.CODEC, MyTotemDollConfig::getTagMenuTooltipSize),
+
+			Codec.INT.optionalFieldOf("better_tag_menu_tooltip_size")
+					.xmap(o -> o.orElse(60), Optional::of)
+					.forGetter(MyTotemDollConfig::getBetterTagMenuTooltipSize),
+
 			optional("tag_menu_tooltip_model_scale", 1.0F, Codec.FLOAT, MyTotemDollConfig::getTagMenuTooltipModelScale),
 			optional("executor_threads_count", 6, Codec.INT, MyTotemDollConfig::getExecutorThreadsCount),
 			optional("first_run", true, Codec.BOOL, MyTotemDollConfig::isFirstRun)
@@ -57,7 +62,7 @@ public class MyTotemDollConfig {
 	private TotemDollArmsType standardTotemDollArmsType;
 	private Vec2i tagButtonPos;
 	private boolean useVanillaTotemModel;
-	private TooltipSize tagMenuTooltipSize;
+	private int betterTagMenuTooltipSize;
 	private float tagMenuTooltipModelScale;
 	private int executorThreadsCount;
 	private boolean firstRun;
@@ -72,7 +77,7 @@ public class MyTotemDollConfig {
 		this.standardTotemDollArmsType   = TotemDollArmsType.WIDE;
 		this.tagButtonPos                = new Vec2i(155, 48);
 		this.useVanillaTotemModel        = false;
-		this.tagMenuTooltipSize          = TooltipSize.X1;
+		this.betterTagMenuTooltipSize    = 60;
 		this.tagMenuTooltipModelScale    = 1.0F;
 		this.executorThreadsCount        = 6;
 		this.firstRun                    = true;

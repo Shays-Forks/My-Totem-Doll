@@ -88,7 +88,7 @@ public class StandardDollCategory {
 				.withCustomDescription(renderer)
 				.withBinding(defConfig.getStandardTotemDollModelValue(), config::getStandardTotemDollModelValue, (value) -> {
 					config.setStandardTotemDollModelValue(value);
-					renderer.updateDoll();
+					renderer.updateDollState(true);
 					for (TotemDollData data : TotemDollManager.getAllLoadedDolls()) {
 						data.setShouldRecreateModel(true);
 					}
@@ -100,7 +100,7 @@ public class StandardDollCategory {
 				.withCustomDescription(renderer)
 				.withBinding(defConfig.getStandardTotemDollArmsType(), config::getStandardTotemDollArmsType, (value) -> {
 					config.setStandardTotemDollArmsType(value);
-					renderer.updateDoll();
+					renderer.updateDollState(false);
 				}, true)
 				.withController(TotemDollArmsType.class)
 				.build();

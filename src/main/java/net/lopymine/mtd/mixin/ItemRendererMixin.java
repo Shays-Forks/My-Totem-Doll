@@ -39,12 +39,10 @@ public class ItemRendererMixin {
 	@Inject(at = @At(value = "HEAD"), method = "getModel", cancellable = true)
 	private void renderDoll(ItemStack stack, World world, LivingEntity entity, int seed, CallbackInfoReturnable<BakedModel> cir) {
 	//?}
-		if (!MyTotemDollClient.getConfig().isModEnabled() || !stack.isOf(Items.TOTEM_OF_UNDYING)) {
+		if (!MyTotemDollClient.canProcess(stack)) {
 			return;
 		}
-
-		String string = stack.getName().getString();
-		if (TotemDollPlugin.work(string)) {
+		if (TotemDollPlugin.work(stack)) {
 			BakedModel model = this.models/^? <=1.21.1 {^/ .getModelManager() /^?}^/.getModel(TotemDollPlugin.ID);
 			stack.setModdedModel(true);
 			cir.setReturnValue(model);

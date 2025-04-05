@@ -17,7 +17,7 @@ public class AnvilScreenHandlerMixin {
 
 	@WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getName()Lnet/minecraft/text/Text;"), method = "updateResult")
 	private Text swapItemName(ItemStack stack, Operation<Text> original) {
-		if (!MyTotemDollClient.getConfig().isModEnabled() || !stack.isOf(Items.TOTEM_OF_UNDYING)) {
+		if (!MyTotemDollClient.canProcess(stack)) {
 			return original.call(stack);
 		}
 		Text customName = stack.getRealCustomName();

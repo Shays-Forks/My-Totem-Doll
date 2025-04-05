@@ -1,6 +1,8 @@
 package net.lopymine.mtd.client;
 
 import lombok.*;
+import net.minecraft.item.*;
+import net.minecraft.registry.Registries;
 import org.slf4j.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.lopymine.mtd.MyTotemDoll;
@@ -12,6 +14,8 @@ import net.lopymine.mtd.config.MyTotemDollConfig;
 import net.lopymine.mtd.pack.*;
 import net.lopymine.mtd.tag.manager.*;
 import net.lopymine.mtd.utils.plugin.TotemDollPlugin;
+
+import org.jetbrains.annotations.Nullable;
 
 public class MyTotemDollClient implements ClientModInitializer {
 
@@ -32,5 +36,13 @@ public class MyTotemDollClient implements ClientModInitializer {
 		MyTotemDollReloadListener.register();
 		TotemDollPlugin.register();
 		TotemDollModelFinder.registerBuiltinModels();
+	}
+
+	public static boolean canProcess(@Nullable ItemStack stack) {
+		return stack != null && MyTotemDollClient.getConfig().isModEnabled() && isProbablyTotem(stack);
+	}
+
+	private static boolean isProbablyTotem(ItemStack stack) {
+		return stack.isOf(Items.TOTEM_OF_UNDYING) || Registries.ITEM.getId(stack.getItem()).getPath().contains("totem");
 	}
 }

@@ -36,10 +36,10 @@ public enum DollRenderContext {
 		//? if <=1.21.4 {
 		/*if (object instanceof
 				//? if >=1.21.2 {
-				/^net.minecraft.item.ModelTransformationMode
-				^///?} else {
-				net.minecraft.client.render.model.json.ModelTransformationMode
-				//?}
+				net.minecraft.item.ModelTransformationMode
+				//?} else {
+				/^net.minecraft.client.render.model.json.ModelTransformationMode
+				^///?}
 						mode) {
 			return switch (mode) {
 				case THIRD_PERSON_LEFT_HAND -> D_THIRD_PERSON_LEFT_HAND;

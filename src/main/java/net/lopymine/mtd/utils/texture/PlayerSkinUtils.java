@@ -33,7 +33,7 @@ public class PlayerSkinUtils {
 				AbstractTexture abstractTexture = supplier.get();
 
 				//? <=1.21.3 {
-				/*if (supplier instanceof PlayerSkinTexture playerSkinTexture) {
+				/*if (abstractTexture instanceof PlayerSkinTexture playerSkinTexture) {
 					playerSkinTexture.setOnSuccessAction(onSuccessRegistration);
 					playerSkinTexture.setOnFailedAction(onFailedRegistration);
 					if (cape) {
@@ -103,16 +103,32 @@ public class PlayerSkinUtils {
 		if (texture instanceof NativeImageBackedTexture backedTexture) {
 			image = backedTexture.getImage();
 		}
-		if (texture instanceof ResourceTexture) {
+		//? if <=1.21.3 {
+		/*if (texture instanceof PlayerSkinTexture skinTexture) {
+			if (skinTexture.cacheFile != null && skinTexture.cacheFile.exists()) {
+				try {
+					InputStream open = new FileInputStream(skinTexture.cacheFile);
+					image = NativeImage.read(open);
+				} catch (Exception e) {
+					if (MyTotemDollClient.getConfig().isDebugLogEnabled()) {
+						MyTotemDollClient.LOGGER.error("Failed to read player skin texture with id \"%s\"".formatted(id.toString()), e);
+					}
+					return id;
+				}
+			}
+		} else if (texture instanceof ResourceTexture) {
 			ResourceManager resourceManager = MinecraftClient.getInstance().getResourceManager();
 			try {
 				InputStream open = resourceManager.open(id);
 				image = NativeImage.read(open);
 			} catch (Exception e) {
-				MyTotemDollClient.LOGGER.error("Failed to read resource texture with id \"%s\"".formatted(id.toString()), e);
+				if (MyTotemDollClient.getConfig().isDebugLogEnabled()) {
+					MyTotemDollClient.LOGGER.error("Failed to read resource texture with id \"%s\"".formatted(id.toString()), e);
+				}
 				return id;
 			}
 		}
+		*///?}
 		if (image == null || (image.getWidth() == 64 && image.getHeight() == 64)) {
 			return id;
 		}

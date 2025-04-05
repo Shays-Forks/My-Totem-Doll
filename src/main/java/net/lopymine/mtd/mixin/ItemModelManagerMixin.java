@@ -49,12 +49,11 @@ public class ItemModelManagerMixin {
 
 	@Unique
 	private Object changeModel(ItemStack stack, Supplier<Object> supplier) {
-		if (!MyTotemDollClient.getConfig().isModEnabled() || !stack.isOf(Items.TOTEM_OF_UNDYING)) { // TODO you know what I mean
+		if (!MyTotemDollClient.canProcess(stack)) {
 			return supplier.get();
 		}
 
-		String string = stack.getName().getString();
-		if (TotemDollPlugin.work(string) || (!MyTotemDollClient.getConfig().isUseVanillaTotemModel() && stack.getRealCustomName() == null && TotemDollPlugin.work(MyTotemDollClient.getConfig().getStandardTotemDollSkinValue()))) {
+		if (TotemDollPlugin.work(stack)) {
 			stack.setModdedModel(true);
 			return TotemDollPlugin.ID;
 		}

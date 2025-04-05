@@ -22,17 +22,17 @@ public class SodiumCompatPlugin extends CompatPlugin {
 		boolean hotMixin = mixinClassName.equals("net.lopymine.mtd.mixin.sodium.CubeMixinMixin");
 
 		if (hotMixin) {
-			return !this.isCurrentVersionOlderThanHot();
+			return !this.isCurrentVersionOlderThanHot(mixinClassName);
 		}
 
 		if (oldMixin) {
-			return this.isCurrentVersionOlderThanHot();
+			return this.isCurrentVersionOlderThanHot(mixinClassName);
 		}
 
 		return true;
 	}
 
-	private boolean isCurrentVersionOlderThanHot() {
+	private boolean isCurrentVersionOlderThanHot(String mixinName) {
 		FabricLoader fabricLoader = FabricLoader.getInstance();
 		ModContainer modContainer = fabricLoader.getModContainer(this.getCompatModId()).orElseThrow();
 
@@ -46,9 +46,7 @@ public class SodiumCompatPlugin extends CompatPlugin {
 		// CubeMixin
 
 		boolean bl = currentVersion.compareTo(hotVersion) < 0;
-		if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-			MyTotemDollClient.LOGGER.info("Detected Sodium, current version older than hot: {}", bl);
-		}
+		MyTotemDollClient.LOGGER.info("[SodiumCompatPlugin] [{}] Detected Sodium, current version older than hot: {}", mixinName, bl);
 		return bl;
 	}
 

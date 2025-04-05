@@ -110,7 +110,7 @@ public class TotemDollPreviewRenderer implements ImageRenderer {
 
 		BackgroundRenderer.drawTransparencyWidgetBackground(context, x, y, size, size, true, true);
 
-		TotemDollRenderer.renderPreview(context, x, y, size, size, size / 1.5F, config.isUseVanillaTotemModel() || TotemDollPlugin.work(config.getStandardTotemDollSkinValue()) ? null : this.data);
+		TotemDollRenderer.renderPreview(context, x, y, size, size, size / 1.5F, config.isUseVanillaTotemModel() || TotemDollPlugin.isGoodStick(config.getStandardTotemDollSkinValue()) ? null : this.data);
 
 		return y + size + 2;
 	}
@@ -122,5 +122,9 @@ public class TotemDollPreviewRenderer implements ImageRenderer {
 
 	public void updateDoll() {
 		this.data = StandardTotemDollManager.updateDoll();
+	}
+
+	public void updateDollState(boolean recreateModel) {
+		this.data = StandardTotemDollManager.updateDollState(recreateModel);
 	}
 }

@@ -34,7 +34,9 @@
 	    "ItemStackWithPlayerEntityMixin",
 	    "ItemStackMixin",
 	    "HandledScreenMixin",
-	    "MinecraftClientMixin"
+	    "MinecraftClientMixin",
+	    "ResourceTextureMixin",
+	    "TextureManagerMixin"
     ],
     "injectors": {
         "defaultRequire": 1

@@ -1,19 +1,15 @@
 package net.lopymine.mtd.gui.widget.tag;
 
 import lombok.*;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
 import net.lopymine.mtd.client.MyTotemDollClient;
 import net.lopymine.mtd.config.MyTotemDollConfig;
-import net.lopymine.mtd.config.rendering.TooltipSize;
 import net.lopymine.mtd.doll.data.TotemDollData;
 import net.lopymine.mtd.doll.manager.StandardTotemDollManager;
 import net.lopymine.mtd.doll.renderer.TotemDollRenderer;
@@ -71,10 +67,10 @@ public class CustomModelTagButtonWidget extends TagButtonWidget {
 		int amount = ((int) verticalAmount) > 0 ? 1 : -1;
 		MyTotemDollConfig config = MyTotemDollClient.getConfig();
 		if (Screen.hasShiftDown()) {
-			config.setTagMenuTooltipSize(TooltipSize.values()[MathHelper.floorMod(config.getTagMenuTooltipSize().ordinal() + amount, TooltipSize.values().length)]);
+			config.setBetterTagMenuTooltipSize(MathHelper.clamp(config.getBetterTagMenuTooltipSize() + (amount * 2), 60, 500));
 			return true;
 		} else if (Screen.hasControlDown()) {
-			config.setTagMenuTooltipModelScale(MathHelper.clamp(config.getTagMenuTooltipModelScale() + (amount / 18F), 0.1F, 10F));
+			config.setTagMenuTooltipModelScale(MathHelper.clamp(config.getTagMenuTooltipModelScale() + (amount / 12F), 0.1F, 10F));
 			return true;
 		}
 		return false;

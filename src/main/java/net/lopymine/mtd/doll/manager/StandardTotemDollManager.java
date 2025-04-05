@@ -38,6 +38,13 @@ public class StandardTotemDollManager {
 		return DEFAULT_DOLL;
 	}
 
+	public static TotemDollData updateDollState(boolean recreateModel) {
+		TotemDollData standardDoll = getStandardDoll();
+		applyConfigValues(standardDoll);
+		standardDoll.setShouldRecreateModel(recreateModel);
+		return standardDoll.refreshBeforeRendering();
+	}
+
 	public static TotemDollData applyConfigValues(TotemDollData data) {
 		MyTotemDollConfig config = MyTotemDollClient.getConfig();
 		data.getTextures().setArmsType(config.getStandardTotemDollArmsType());
