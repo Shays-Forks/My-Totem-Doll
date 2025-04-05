@@ -1,1 +1,7 @@
-- Fixed sodium mixins again (compat with Sodium + Iris)
+- Better tag menu tooltip resizing
+- Added support for other mod totems
+- Fixed stick
+- Fixed Dinnerbone
+- Fixed issue with doll registering (#18)
+- Other nice fixes and changes
+- Fixed sodium mixins again (compat with Sodium + Iris + My Totem Doll)
