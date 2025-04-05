@@ -3,4 +3,4 @@
 - Fixed stick
 - Fixed Dinnerbone
 - Fixed issue with doll registering (#18)
-- Other nice fixes and changes
+- Other nice fixes and changes 
