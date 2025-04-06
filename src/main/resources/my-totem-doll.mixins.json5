@@ -36,7 +36,8 @@
 	    "HandledScreenMixin",
 	    "MinecraftClientMixin",
 	    "ResourceTextureMixin",
-	    "TextureManagerMixin"
+	    "TextureManagerMixin",
+	    "ModelPartMixin"
     ],
     "injectors": {
         "defaultRequire": 1

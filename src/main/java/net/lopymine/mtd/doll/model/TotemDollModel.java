@@ -5,6 +5,8 @@ import net.minecraft.client.model.Model;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import org.apache.commons.lang3.ArrayUtils;
+
 import net.lopymine.mtd.MyTotemDoll;
 import net.lopymine.mtd.client.MyTotemDollClient;
 import net.lopymine.mtd.doll.data.TotemDollTextures;
@@ -12,17 +14,17 @@ import net.lopymine.mtd.model.base.*;
 import net.lopymine.mtd.model.bb.manager.BlockBenchModelManager;
 import java.util.*;
 import java.util.function.*;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
-@Getter
-@Setter
 public class TotemDollModel extends Model {
 
 	public static final Identifier TWO_D_MODEL_ID = MyTotemDoll.id("dolls/2d_doll.bbmodel");
 	public static final Identifier THREE_D_MODEL_id = MyTotemDoll.id("dolls/3d_doll.bbmodel");
 
+	@Getter
 	private final MModel main;
 
+	@Getter
 	private final MModelCollection
 			head,
 			body,
@@ -33,13 +35,17 @@ public class TotemDollModel extends Model {
 			leftLeg,
 			rightLeg;
 
+	@Getter
 	private final MModelCollection
 			cape,
 			elytra,
 			ears;
 
+	@Getter
+	@Setter
 	private boolean slim;
 
+	@Getter(AccessLevel.PRIVATE)
 	private Drawer drawer;
 
 	public TotemDollModel(MModel root, boolean slim) {
@@ -112,6 +118,25 @@ public class TotemDollModel extends Model {
 
 	*///?}
 
+	public void draw(MatrixStack matrices, int light, int overlay, /*? if >=1.21 {*/int color/*?} else {*//*float red, float green, float blue, float alpha *//*?}*/) {
+		this.getDrawer().checkInitialization();
+
+		MModelCollection leftArm = this.getLeftArm();
+		MModelCollection rightArm = this.getRightArm();
+
+		enableIfPresent(leftArm);
+		enableIfPresent(rightArm);
+
+		this.getMain().setDrawer(this.getDrawer());
+		super.render(matrices, this.drawer.getMainVertexConsumer(), light, overlay, color);
+		this.getMain().setDrawer(null);
+
+		disableIfPresent(leftArm);
+		disableIfPresent(rightArm);
+
+		this.drawer.clear();
+	}
+
 	public void apply(TotemDollTextures textures) {
 		this.slim = textures.getArmsType().isSlim();
 		this.resetPartsVisibility();
@@ -125,60 +150,89 @@ public class TotemDollModel extends Model {
 		return this.slim ? this.rightArmSlim : this.rightArmWide;
 	}
 
-	public Drawer getDrawer() {
+	public Drawer getPreparedForRenderDrawer(VertexConsumerProvider provider, Identifier mainTexture) {
 		if (this.drawer == null) {
-			this.drawer = new Drawer(this);
+			this.drawer = new Drawer();
 		}
-		this.drawer.prepareForRender();
+		this.drawer.setProvider(provider);
+		this.drawer.setLayerFunction(this::getLayer);
+		this.drawer.setCurrentMainVertexConsumer(() -> this.drawer.getProvider().getBuffer(this.drawer.getLayerFunction().apply(mainTexture)));
 		return this.drawer;
 	}
 
 	public static class Drawer {
 
-		private final Map<String, Supplier<Identifier>> textures = new HashMap<>();
-		private final Set<String> requestedParts = new HashSet<>();
+		@Getter
+		private final Map<String, VertexConsumerGetter> requestedPartsWithTextureConsumer = new HashMap<>();
+		@Setter
+		@Nullable
+		public VertexConsumerProvider provider;
+		@Setter
+		@Nullable
+		private Function<Identifier, RenderLayer> layerFunction;
+		private VertexConsumerGetter[] mainVertexConsumerGetters = new VertexConsumerGetter[0];
 
-		private final Function<Identifier, RenderLayer> layerFunction;
-		private final TotemDollModel model;
-
-		public Drawer(TotemDollModel model) {
-			this.model         = model;
-			this.layerFunction = model::getLayer;
+		public void requestPartWithTexture(String part, Identifier texture) {
+			if (this.provider == null || this.layerFunction == null) {
+				throw new IllegalArgumentException("MyTotemDoll Model Drawer was not initialized before rendering!");
+			}
+			this.requestedPartsWithTextureConsumer.put(part, () -> this.provider.getBuffer(this.layerFunction.apply(texture)));
 		}
 
-		public Drawer texture(String part, Identifier texture) {
-			this.textures.put(part, () -> texture);
-			return this;
+		public void requestPartWithTexture(String part, Supplier<Identifier> texture) {
+			if (this.provider == null || this.layerFunction == null) {
+				throw new IllegalArgumentException("MyTotemDoll Model Drawer was not initialized before rendering!");
+			}
+			this.requestedPartsWithTextureConsumer.put(part, () -> this.provider.getBuffer(this.layerFunction.apply(texture.get())));
 		}
 
-		public Drawer texture(String part, Supplier<Identifier> texture) {
-			this.textures.put(part, texture);
-			return this;
+		public void clear() {
+			this.provider = null;
+			this.layerFunction = null;
+			this.mainVertexConsumerGetters = new VertexConsumerGetter[0];
+			this.requestedPartsWithTextureConsumer.clear();
 		}
 
-		public Drawer requestDrawingPart(String part) {
-			this.requestedParts.add(part);
-			return this;
+		public void checkInitialization() {
+			if (this.provider == null || this.layerFunction == null) {
+				throw new IllegalArgumentException("MyTotemDoll Model Drawer was not initialized before rendering!");
+			}
 		}
 
-		public void draw(MatrixStack matrices, VertexConsumerProvider provider, Identifier mainTexture, int light, int overlay, /*? if >=1.21 {*/int color/*?} else {*//*float red, float green, float blue, float alpha *//*?}*/) {
-			MModelCollection leftArm = this.model.getLeftArm();
-			MModelCollection rightArm = this.model.getRightArm();
-
-			enableIfPresent(leftArm);
-			enableIfPresent(rightArm);
-
-			this.model.getMain().draw(matrices, provider, this.layerFunction, mainTexture, this.textures, this.requestedParts, light, overlay, /*? if >=1.21 {*/color/*?} else {*/ /*red, green, blue, alpha*//*?}*/);
-
-			disableIfPresent(leftArm);
-			disableIfPresent(rightArm);
-
-			this.textures.clear();
+		public @NotNull VertexConsumerProvider getProvider() {
+			if (this.provider == null) {
+				throw new IllegalArgumentException("MyTotemDoll Model Drawer was not initialized before rendering!");
+			}
+			return this.provider;
 		}
 
-		public void prepareForRender() {
-			this.textures.clear();
-			this.requestedParts.clear();
+		public @NotNull Function<Identifier, RenderLayer> getLayerFunction() {
+			if (this.layerFunction == null) {
+				throw new IllegalArgumentException("MyTotemDoll Model Drawer was not initialized before rendering!");
+			}
+			return this.layerFunction;
 		}
+
+		public void setCurrentMainVertexConsumer(VertexConsumerGetter consumer) {
+			this.mainVertexConsumerGetters = ArrayUtils.add(this.mainVertexConsumerGetters, consumer);
+		}
+
+		public void clearCurrentMainVertexConsumer() {
+			if (this.mainVertexConsumerGetters.length == 1) {
+				return;
+			}
+			this.mainVertexConsumerGetters = ArrayUtils.remove(this.mainVertexConsumerGetters, this.mainVertexConsumerGetters.length-1);
+		}
+
+		public VertexConsumer getMainVertexConsumer() {
+			if (this.mainVertexConsumerGetters.length == 0) {
+				throw new IllegalArgumentException("mainVertexConsumerGetters is empty for MyTotemDoll model!");
+			}
+			return this.mainVertexConsumerGetters[this.mainVertexConsumerGetters.length-1].get();
+		}
+	}
+
+	public interface VertexConsumerGetter {
+		VertexConsumer get();
 	}
 }

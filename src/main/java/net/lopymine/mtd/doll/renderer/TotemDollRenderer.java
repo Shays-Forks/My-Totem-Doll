@@ -165,27 +165,16 @@ public class TotemDollRenderer {
 		matrices.scale(-1.0F, -1.0F, 1.0F); // 0 - -
 		matrices.translate(-0.5F, -0.5F, -0.5F);
 
-		Drawer drawer = model.getDrawer();
-
+		Drawer drawer = model.getPreparedForRenderDrawer(provider, skinTexture);
 		if (nickname != null && nickname.equals("deadmau5")) {
-			drawer.texture("ears", skinTexture);
-			drawer.requestDrawingPart("ears");
+			drawer.requestPartWithTexture("ears", skinTexture);
 		}
-
 		if (capeTexture != null) {
-			drawer.texture("cape", textures::getCapeTexture);
-			drawer.requestDrawingPart("cape");
+			drawer.requestPartWithTexture("cape", textures::getCapeTexture);
 		}
+		drawer.requestPartWithTexture("elytra", textures::getElytraTexture);
 
-		drawer.texture("elytra", textures::getElytraTexture);
-		drawer.requestDrawingPart("elytra");
-
-		drawer.draw(matrices, provider, skinTexture, light, overlay, /*? if >=1.21 {*/ -1 /*?} else {*/ /*1.0F, 1.0F, 1.0F, 1.0F *//*?}*/);
-
-//		if (LoadedMods.EARS_LOADED) {
-//			TotemDollEarsRenderer renderer = TotemDollEarsRenderer.getInstance();
-//			renderer.render(matrices, provider, totemDollData, light, overlay);
-//		}
+		model.draw(matrices, light, overlay, /*? if >=1.21 {*/ -1 /*?} else {*/ /*1.0F, 1.0F, 1.0F, 1.0F *//*?}*/);
 
 		matrices.pop();
 	}

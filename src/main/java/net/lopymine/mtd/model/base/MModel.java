@@ -11,6 +11,8 @@ import net.minecraft.util.math.*;
 import org.slf4j.Logger;
 
 import net.lopymine.mtd.client.MyTotemDollClient;
+import net.lopymine.mtd.doll.model.TotemDollModel;
+import net.lopymine.mtd.doll.model.TotemDollModel.Drawer;
 import net.lopymine.mtd.extension.*;
 import net.lopymine.mtd.model.bb.*;
 
@@ -23,7 +25,7 @@ import org.jetbrains.annotations.*;
 @Getter
 @Setter
 @ExtensionMethod({ModelTransformExtension.class, DilationExtension.class, IdentifierExtension.class})
-public class MModel extends ModelPart {
+public class MModel extends ModelPart implements IMModelPart {
 
 	private ModelTransformation transformation = ModelTransformation.NONE;
 	private final Map<String, MModel> mChildren;
@@ -31,14 +33,16 @@ public class MModel extends ModelPart {
 	private final ModelState state;
 	private final String name;
 
-	private boolean skipRendering = false;
-
 	@Nullable
 	private MModel parent;
 	@Nullable
 	private Identifier location;
 	@Nullable
 	private Identifier builtinTexture;
+
+	private boolean skipRendering = false;
+	@Nullable
+	private Drawer drawer;
 
 	public MModel(List<MCuboid> mCuboids, Map<String, MModel> mChildren, ModelState state, String name) {
 		super(mCuboids.stream().map(MCuboid::asCuboid).toList(), mChildren.entrySet().stream().collect(Collectors.toMap(Entry::getKey, e -> e.getValue().asModelPart())));
@@ -80,11 +84,6 @@ public class MModel extends ModelPart {
 		}
 	}
 
-	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, /*? if >=1.21 {*/int color/*?} else {*//*float red, float green, float blue, float alpha *//*?}*/) {
-		// NO-OP
-	}
-
 	public MModelCollection findModels(String suffix) {
 		ArrayList<MModel> list = new ArrayList<>();
 
@@ -106,39 +105,6 @@ public class MModel extends ModelPart {
 
 	public ModelPart asModelPart() {
 		return this;
-	}
-
-	public void draw(MatrixStack matrices, VertexConsumerProvider provider, Function<Identifier, RenderLayer> layerFunction, Identifier mainTexture, Map<String, Supplier<Identifier>> partsTextures, Set<String> requestedParts, int light, int overlay, /*? if >=1.21 {*/int color/*?} else {*//*float red, float green, float blue, float alpha *//*?}*/) {
-		// TODO Optimize
-		if (this.skipRendering && !requestedParts.contains(this.getName())) {
-			return;
-		}
-
-		if (!this.visible) {
-			return;
-		}
-
-		if (this.mCuboids.isEmpty() && this.mChildren.isEmpty()) {
-			return;
-		}
-
-		Identifier texture = this.builtinTexture == null ? partsTextures.getOrDefault(this.getName(), () -> mainTexture).get() : this.builtinTexture;
-		if (texture == null) {
-			return;
-		}
-
-		matrices.push();
-		this./*? if <=1.21.4 {*//*rotate*//*?} else {*/ applyTransform /*?}*/(matrices);
-		if (!this.hidden && !this.mCuboids.isEmpty()) {
-			VertexConsumer consumer = provider.getBuffer(layerFunction.apply(texture));
-			this.renderCuboids(matrices.peek(), consumer, light, overlay, /*? if >=1.21 {*/ color/*?} else {*/ /*red, green, blue, alpha *//*?}*/);
-		}
-
-		for (MModel model : this.mChildren.values()) {
-			model.draw(matrices, provider, layerFunction, texture, partsTextures, requestedParts, light, overlay, /*? if >=1.21 {*/ color/*?} else {*/ /*red, green, blue, alpha *//*?}*/);
-		}
-
-		matrices.pop();
 	}
 
 	private int getCountOfParents() {
@@ -239,5 +205,10 @@ public class MModel extends ModelPart {
 	@Override
 	public String toString() {
 		return "%s [%s]".formatted(this.getName(), this.getState().name().toUpperCase());
+	}
+
+	public void setDrawer(@Nullable Drawer drawer) {
+		this.drawer = drawer;
+		this.mChildren.values().forEach((mmodel) -> mmodel.setDrawer(drawer));
 	}
 }

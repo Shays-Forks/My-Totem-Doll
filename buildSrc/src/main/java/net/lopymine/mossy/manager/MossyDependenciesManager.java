@@ -49,6 +49,7 @@ public class MossyDependenciesManager {
 
 			AdditionalDependencyOverride override = overrides.get(modId);
 			String configurationName = override != null ? override.configurationName() : "modImplementation";
+			System.out.println(modId + " " + configurationName);
 			dependencies.add(configurationName, "maven.modrinth:%s:%s".formatted(modId, version));
 		});
 

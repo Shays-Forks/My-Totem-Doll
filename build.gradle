@@ -23,6 +23,8 @@ mossyDependencies {
 
 		//disable("just_mod_id")
 
+		//override("modCompileOnly", "sodium")
+
 		disable("cit-resewn")
 	}
 }
