@@ -200,7 +200,7 @@ public class TotemDollRenderer {
 
 	private static boolean beforeDollRendered(@Nullable DollRenderContext context, ItemStack stack, TotemDollData totemDollData) {
 		boolean standardDoll = StandardTotemDollManager.getStandardDoll().equals(totemDollData);
-		if (standardDoll && TotemDollPlugin.work(MyTotemDollClient.getConfig().getStandardTotemDollSkinValue(), stack)) {
+		if (standardDoll && (TotemDollPlugin.work(MyTotemDollClient.getConfig().getStandardTotemDollSkinValue(), stack) || MyTotemDollClient.getConfig().isUseVanillaTotemModel())) {
 			return false;
 		}
 
@@ -223,6 +223,6 @@ public class TotemDollRenderer {
 	}
 
 	public static boolean canRender(@Nullable ItemStack stack) {
-		return MyTotemDollClient.canProcess(stack) && !MyTotemDollClient.getConfig().isUseVanillaTotemModel() && !TotemDollPlugin.work(stack) && !stack.hasModdedModel();
+		return MyTotemDollClient.canProcess(stack) && !TotemDollPlugin.work(stack) && !stack.hasModdedModel();
 	}
 }
