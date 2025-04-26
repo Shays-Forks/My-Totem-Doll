@@ -46,7 +46,8 @@ public class MyTotemDollConfig {
 
 			optional("tag_menu_tooltip_model_scale", 1.0F, Codec.FLOAT, MyTotemDollConfig::getTagMenuTooltipModelScale),
 			optional("executor_threads_count", 6, Codec.INT, MyTotemDollConfig::getExecutorThreadsCount),
-			optional("first_run", true, Codec.BOOL, MyTotemDollConfig::isFirstRun)
+			optional("first_run", true, Codec.BOOL, MyTotemDollConfig::isFirstRun),
+			optional("support_other_mods_totems", true, Codec.BOOL, MyTotemDollConfig::isSupportOtherModsTotems)
 	).apply(instance, MyTotemDollConfig::new));
 
 	private static final File CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve(MyTotemDoll.MOD_ID + ".json5").toFile();
@@ -66,6 +67,7 @@ public class MyTotemDollConfig {
 	private float tagMenuTooltipModelScale;
 	private int executorThreadsCount;
 	private boolean firstRun;
+	private boolean supportOtherModsTotems;
 
 	public MyTotemDollConfig() {
 		this.modEnabled                  = true;
@@ -80,7 +82,8 @@ public class MyTotemDollConfig {
 		this.betterTagMenuTooltipSize    = 60;
 		this.tagMenuTooltipModelScale    = 1.0F;
 		this.executorThreadsCount        = 6;
-		this.firstRun                    = true;
+		this.firstRun               = true;
+		this.supportOtherModsTotems = true;
 	}
 
 	public static MyTotemDollConfig getInstance() {

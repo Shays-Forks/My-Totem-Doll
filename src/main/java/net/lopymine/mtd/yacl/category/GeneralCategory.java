@@ -27,6 +27,11 @@ public class GeneralCategory {
 								.withDescription(SimpleContent.NONE)
 								.withController()
 								.build(),
+						SimpleOption.<Boolean>startBuilder("support_other_mods_totems")
+								.withBinding(defConfig.isSupportOtherModsTotems(), config::isSupportOtherModsTotems, config::setSupportOtherModsTotems, true)
+								.withDescription(SimpleContent.NONE)
+								.withController()
+								.build(),
 						SimpleOption.<Boolean>startBuilder("debug_log_enabled")
 								.withBinding(defConfig.isDebugLogEnabled(), config::isDebugLogEnabled, config::setDebugLogEnabled, true)
 								.withDescription(SimpleContent.NONE)

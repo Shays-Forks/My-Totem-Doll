@@ -10,6 +10,8 @@
 	"my-totem-doll.modmenu.group.main.description": "Main settings of My Totem Doll Mod.",
 	"my-totem-doll.modmenu.option.mod_enabled.name": "Mod Enabled",
 	"my-totem-doll.modmenu.option.mod_enabled.description": "If enabled, all totems will be replaced with player dolls; if disabled, won't.",
+	"my-totem-doll.modmenu.option.support_other_mods_totems.name": "Support Other Mod Totems",
+	"my-totem-doll.modmenu.option.support_other_mods_totems.description": "If enabled, doll models will be applied to other mods totems too; if disabled, won't.",
 	"my-totem-doll.modmenu.option.debug_log_enabled.name": "&6Debug Log Enabled",
 	"my-totem-doll.modmenu.option.debug_log_enabled.description": "If enabled, additional info will be logged to console for debugging; if disabled, won't.",
 

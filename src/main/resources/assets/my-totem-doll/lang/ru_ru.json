@@ -9,8 +9,10 @@
 	"my-totem-doll.modmenu.group.main.description": "Основные настройки мода My Totem Doll.",
 	"my-totem-doll.modmenu.option.mod_enabled.name": "Включить мод",
 	"my-totem-doll.modmenu.option.mod_enabled.description": "Если мод включён, все фишки мода будут включены, по типу замены тотемов, дополнительных интерфейсов и так далее; если не включён, не будут.",
+	"my-totem-doll.modmenu.option.support_other_mods_totems.name": "Поддержка модовых тотемов",
+	"my-totem-doll.modmenu.option.support_other_mods_totems.description": "Если включено, модели кукол будут также применены на тотемы из других модов; если отключено, не будут.",
 	"my-totem-doll.modmenu.option.debug_log_enabled.name": "&6Включить режим откладки",
-	"my-totem-doll.modmenu.option.debug_log_enabled.description": "Если включён, то в консоль игры будет выводиться допольнительная информация о функционировании мода; если не включён, не будет.",
+	"my-totem-doll.modmenu.option.debug_log_enabled.description": "Если включено, то в консоль игры будет выводиться допольнительная информация о функционировании мода; если не включён, не будет.",
 
 	"my-totem-doll.modmenu.group.threads.name": "&lПотоки",
 	"my-totem-doll.modmenu.group.threads.description": "Настройки потоков, которые отвечают за производительность мода!",
