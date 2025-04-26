@@ -102,6 +102,8 @@ public class TotemDollData {
 	}
 
 	public TotemDollData refreshBeforeRendering() {
+		this.clearCurrentTempTextures();
+		this.clearCurrentTempModel();
 		TotemDollTextures textures = this.getTextures();
 		TotemDollModel model = this.getModel();
 		model.apply(textures);
