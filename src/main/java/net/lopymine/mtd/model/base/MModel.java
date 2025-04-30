@@ -128,7 +128,7 @@ public class MModel extends ModelPart {
 		}
 
 		matrices.push();
-		this./*? if <=1.21.4 {*/rotate/*?} else {*/ /*applyTransform *//*?}*/(matrices);
+		this./*? if <=1.21.4 {*//*rotate*//*?} else {*/ applyTransform /*?}*/(matrices);
 		if (!this.hidden && !this.mCuboids.isEmpty()) {
 			VertexConsumer consumer = provider.getBuffer(layerFunction.apply(texture));
 			this.renderCuboids(matrices.peek(), consumer, light, overlay, /*? if >=1.21 {*/ color/*?} else {*/ /*red, green, blue, alpha *//*?}*/);

@@ -2,7 +2,7 @@ package net.lopymine.mtd.gui;
 
 //? if =1.21.4 {
 
-import net.minecraft.client.gui.DrawContext;
+/*import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.text.Text;
@@ -70,4 +70,4 @@ public class StartWidget extends ButtonWidget {
 		}
 	}
 }
-//?}
+*///?}

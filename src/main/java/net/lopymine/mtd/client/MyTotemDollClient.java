@@ -27,10 +27,10 @@ public class MyTotemDollClient implements ClientModInitializer {
 	@Getter
 	private static MyTotemDollConfig config;
 	//? if =1.21.4 {
-	@Setter
+	/*@Setter
 	@Getter
 	private static TempConfig tempConfig;
-	//?}
+	*///?}
 
 	public static boolean bl;
 
@@ -38,10 +38,10 @@ public class MyTotemDollClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		MyTotemDollClient.config = MyTotemDollConfig.getInstance();
 		//? if =1.21.4 {
-		MyTotemDollClient.tempConfig = TempConfig.getInstance();
-		//?}
+		/*MyTotemDollClient.tempConfig = TempConfig.getInstance();
+		*///?}
 		LocalDate currentDate = LocalDate.now();
-		LocalDate startDate = LocalDate.of(2025, 4, 30);
+		LocalDate startDate = LocalDate.of(2025, 5, 1);
 		LocalDate endDate = LocalDate.of(2025, 5, 4);
 		bl = !currentDate.isBefore(startDate) && !currentDate.isAfter(endDate);
 		LOGGER.info("{} Client Initialized", MyTotemDoll.MOD_NAME);

@@ -86,7 +86,7 @@ public class StandardTotemDollManager {
 
 			try (InputStream inputStream = Files.newInputStream(Path.of(data))) {
 				NativeImage nativeImage = NativeImage.read(inputStream);
-				NativeImageBackedTexture texture = new NativeImageBackedTexture(/*? if >=1.21.5 {*/ /*id::toString, *//*?}*/nativeImage);
+				NativeImageBackedTexture texture = new NativeImageBackedTexture(/*? if >=1.21.5 {*/ id::toString, /*?}*/nativeImage);
 				textureManager.registerTexture(id, texture);
 
 				textures.setSkinTexture(id);

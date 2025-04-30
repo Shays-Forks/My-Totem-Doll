@@ -170,7 +170,7 @@ public class BlockBenchModelManager {
 		BBModelResolution resolution = model.getResolution();
 
 		Supplier<MModel> supplier = () -> builder
-				.withTransform(ModelTransform./*? if <=1.21.4 {*/ pivot /*?} else {*/ /*origin *//*?}*/(-16.0F, -8.0F, 0.0F))
+				.withTransform(ModelTransform./*? if <=1.21.4 {*/ /*pivot *//*?} else {*/ origin /*?}*/(-16.0F, -8.0F, 0.0F))
 				.build(resolution.getWidth(), resolution.getHeight())
 				.initAfterBuild(model);
 

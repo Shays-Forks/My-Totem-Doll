@@ -21,13 +21,13 @@ import org.jetbrains.annotations.Nullable;
 public class ItemRenderStateMixin implements ItemRenderStateWithStack {
 
 	//? if <=1.21.4 {
-	@Shadow
+	/*@Shadow
 	ModelTransformationMode modelTransformationMode;
 	@Shadow
 	boolean leftHand;
-	//?} else {
-	/*@Shadow ItemDisplayContext displayContext;
-	*///?}
+	*///?} else {
+	@Shadow ItemDisplayContext displayContext;
+	//?}
 
 	@Unique
 	@Nullable
@@ -35,7 +35,7 @@ public class ItemRenderStateMixin implements ItemRenderStateWithStack {
 
 	@Inject(at = @At("HEAD"), method = "render", cancellable = true)
 	private void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, CallbackInfo ci) {
-		DollRenderContext context = DollRenderContext.of(/*? if <=1.21.4 {*/this.modelTransformationMode/*?} else {*/ /*this.displayContext *//*?}*/);
+		DollRenderContext context = DollRenderContext.of(/*? if <=1.21.4 {*//*this.modelTransformationMode*//*?} else {*/ this.displayContext /*?}*/);
 
 		if (this.stack != null && TotemDollRenderer.rendered(matrices, this.stack, context, vertexConsumers, light, overlay)) {
 			ci.cancel();

@@ -38,9 +38,9 @@
 	    "ResourceTextureMixin",
 	    "TextureManagerMixin",
 	    //? if =1.21.4 {
-	    "TitleScreenMixin",
+	    /*"TitleScreenMixin",
 		"HeadFeatureRendererMixin"
-		//?}
+		*///?}
     ],
     "injectors": {
         "defaultRequire": 1

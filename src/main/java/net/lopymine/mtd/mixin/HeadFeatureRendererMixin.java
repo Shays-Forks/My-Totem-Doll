@@ -1,7 +1,7 @@
 package net.lopymine.mtd.mixin;
 
 //? if =1.21.4 {
-import com.llamalad7.mixinextras.injector.wrapoperation.*;
+/*import com.llamalad7.mixinextras.injector.wrapoperation.*;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.component.*;
 import net.minecraft.entity.*;
@@ -27,4 +27,4 @@ public class HeadFeatureRendererMixin {
 
 }
 
-//?}
+*///?}

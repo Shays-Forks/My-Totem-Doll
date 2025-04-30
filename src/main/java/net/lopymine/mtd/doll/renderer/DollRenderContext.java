@@ -34,12 +34,12 @@ public enum DollRenderContext {
 
 	public static DollRenderContext of(Object object) {
 		//? if <=1.21.4 {
-		if (object instanceof
+		/*if (object instanceof
 				//? if >=1.21.2 {
 				net.minecraft.item.ModelTransformationMode
 				//?} else {
-				/*net.minecraft.client.render.model.json.ModelTransformationMode
-				*///?}
+				/^net.minecraft.client.render.model.json.ModelTransformationMode
+				^///?}
 						mode) {
 			return switch (mode) {
 				case THIRD_PERSON_LEFT_HAND -> D_THIRD_PERSON_LEFT_HAND;
@@ -53,8 +53,8 @@ public enum DollRenderContext {
 				default -> D_NONE;
 			};
 		}
-		//?} else {
-		/*if (object instanceof net.minecraft.item.ItemDisplayContext context) {
+		*///?} else {
+		if (object instanceof net.minecraft.item.ItemDisplayContext context) {
 			return switch (context) {
 				case THIRD_PERSON_LEFT_HAND -> D_THIRD_PERSON_LEFT_HAND;
 				case THIRD_PERSON_RIGHT_HAND -> D_THIRD_PERSON_RIGHT_HAND;
@@ -67,7 +67,7 @@ public enum DollRenderContext {
 				default -> D_NONE;
 			};
 		}
-		*///?}
+		//?}
 		MyTotemDollClient.LOGGER.error("Failed to get DollRenderContext from object: {}", object.getClass().getName());
 		return D_NONE;
 	}
@@ -89,10 +89,10 @@ public enum DollRenderContext {
 	public void apply(MModel model, MatrixStack matrices) {
 		Transformation transformation = get(model.getTransformation());
 		Entry peek = matrices.peek();
-		transformation.apply(this.isLeftHanded(), /*? if <=1.21.4 {*/ matrices /*?} else {*/ /*peek *//*?}*/);
+		transformation.apply(this.isLeftHanded(), /*? if <=1.21.4 {*/ /*matrices *//*?} else {*/ peek /*?}*/);
 		//? if >=1.21.5 {
-		/*peek.translate(0.5F, 0.5F, 0.5F);
-		*///?}
+		peek.translate(0.5F, 0.5F, 0.5F);
+		//?}
 	}
 
 	public boolean isLeftHanded() {
