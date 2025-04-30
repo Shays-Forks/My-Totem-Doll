@@ -79,9 +79,9 @@ public class BBModel {
 		private static final Vec3f DEFAULT_SCALE = new Vec3f(1.0F, 1.0F, 1.0F);
 
 		public static final Codec<Transformation> TRANSFORMATION_CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-				optional("rotation", DEFAULT_ROTATION, Vec3f.CODEC, (o) -> new Vec3f(o.rotation/*? if >=1.21.5 {*/()/*?}*/)),
-				optional("translation", DEFAULT_TRANSLATION, Vec3f.CODEC, (o) -> new Vec3f(o.translation/*? if >=1.21.5 {*/()/*?}*/)),
-				optional("scale", DEFAULT_SCALE, Vec3f.CODEC, (o) -> new Vec3f(o.scale/*? if >=1.21.5 {*/()/*?}*/))
+				optional("rotation", DEFAULT_ROTATION, Vec3f.CODEC, (o) -> new Vec3f(o.rotation/*? if >=1.21.5 {*//*()*//*?}*/)),
+				optional("translation", DEFAULT_TRANSLATION, Vec3f.CODEC, (o) -> new Vec3f(o.translation/*? if >=1.21.5 {*//*()*//*?}*/)),
+				optional("scale", DEFAULT_SCALE, Vec3f.CODEC, (o) -> new Vec3f(o.scale/*? if >=1.21.5 {*//*()*//*?}*/))
 		).apply(instance, Transformations::prepareTransformation));
 
 		private static Transformation prepareTransformation(Vec3f rotation, Vec3f translation, Vec3f scale) {

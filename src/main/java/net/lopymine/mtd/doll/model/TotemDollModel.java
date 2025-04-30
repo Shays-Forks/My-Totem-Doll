@@ -1,6 +1,7 @@
 package net.lopymine.mtd.doll.model;
 
 import lombok.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;

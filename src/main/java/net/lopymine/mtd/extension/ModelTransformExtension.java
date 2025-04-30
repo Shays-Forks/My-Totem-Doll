@@ -16,15 +16,15 @@ public class ModelTransformExtension {
 	}
 	
 	public static float getPivotX(ModelTransform transform) {
-		return /*? if >=1.21.5 {*/ transform.x(); /*?} elif >=1.21.2 {*/ /*transform.pivotX(); *//*?} else {*/ /*transform.pivotX; *//*?}*/
+		return /*? if >=1.21.5 {*/ /*transform.x(); *//*?} elif >=1.21.2 {*/ transform.pivotX(); /*?} else {*/ /*transform.pivotX; *//*?}*/
 	}
 
 	public static float getPivotY(ModelTransform transform) {
-		return /*? if >=1.21.5 {*/ transform.y(); /*?} elif >=1.21.2 {*/ /*transform.pivotY(); *//*?} else {*/ /*transform.pivotY; *//*?}*/
+		return /*? if >=1.21.5 {*/ /*transform.y(); *//*?} elif >=1.21.2 {*/ transform.pivotY(); /*?} else {*/ /*transform.pivotY; *//*?}*/
 	}
 
 	public static float getPivotZ(ModelTransform transform) {
-		return /*? if >=1.21.5 {*/ transform.z(); /*?} elif >=1.21.2 {*/ /*transform.pivotZ(); *//*?} else {*/ /*transform.pivotZ; *//*?}*/
+		return /*? if >=1.21.5 {*/ /*transform.z(); *//*?} elif >=1.21.2 {*/ transform.pivotZ(); /*?} else {*/ /*transform.pivotZ; *//*?}*/
 	}
 
 	public static float getPitch(ModelTransform transform) {

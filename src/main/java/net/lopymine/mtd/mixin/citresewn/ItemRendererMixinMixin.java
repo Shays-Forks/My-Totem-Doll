@@ -1,14 +1,14 @@
 package net.lopymine.mtd.mixin.citresewn;
 
 //? if <=1.21.4 {
-/*import com.bawnorton.mixinsquared.TargetHandler;
+import com.bawnorton.mixinsquared.TargetHandler;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
-*///?}
+//?}
 
 import lombok.experimental.ExtensionMethod;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -21,7 +21,7 @@ import net.lopymine.mtd.extension.ItemStackExtension;
 public abstract class ItemRendererMixinMixin {
 
 	//? if <=1.21.4 {
-	/*@Dynamic
+	@Dynamic
 	@TargetHandler(
 			mixin = "shcm.shsupercm.fabric.citresewn.defaults.mixin.types.item.ItemRendererMixin",
 			name = "citresewn$getItemModel",
@@ -31,5 +31,5 @@ public abstract class ItemRendererMixinMixin {
 	private void flagCITResewnModel(ItemStack stack, World world, LivingEntity entity, int seed, CallbackInfoReturnable<BakedModel> cir, CallbackInfo ci) {
 		stack.setModdedModel(true);
 	}
-	*///?}
+	//?}
 }

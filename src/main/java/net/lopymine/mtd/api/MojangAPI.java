@@ -80,11 +80,11 @@ public class MojangAPI {
 
 	public static Response<ParsedSkinData> getSkinData(String nickname) {
 		Response<UUID> response = MojangAPI.getUUID(nickname);
-		if (response.statusCode() == -1 && response.isEmpty()) { // Other error
-			return new Response<>(response.statusCode(), null);
+		if (response.statusCode() == -1 && response.isEmpty()) { // Other errors
+			return Response.empty(response.statusCode());
 		}
 		if (response.statusCode() == 404 && response.isEmpty()) { // Player not found
-			return new Response<>(response.statusCode(), null);
+			return Response.empty(response.statusCode());
 		}
 		if (response.statusCode() == 429 && response.isEmpty()) { // Too many requests
 			return Response.empty(response.statusCode());

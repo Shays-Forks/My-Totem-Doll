@@ -1,8 +1,11 @@
 package net.lopymine.mtd.doll.data;
 
 import lombok.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 
+import net.lopymine.mtd.MyTotemDoll;
+import net.lopymine.mtd.client.MyTotemDollClient;
 import net.lopymine.mtd.doll.model.TotemDollModel;
 import net.lopymine.mtd.model.base.MModel;
 import net.lopymine.mtd.model.bb.manager.BlockBenchModelManager;
@@ -69,7 +72,11 @@ public class TotemDollData {
 		if (this.model != null && !this.shouldRecreateModel) {
 			return this.model;
 		}
-		MModel dollModel = TotemDollModel.createDollModel();
+
+		MModel dollModel = this.getNickname() != null && this.getNickname().equalsIgnoreCase("KlashRaick") && MyTotemDollClient.bl ?
+				BlockBenchModelManager.getModel(MyTotemDoll.id("dolls/3d_doll_with_party_hat_3.bbmodel")) :
+				TotemDollModel.createDollModel();
+
 		this.model = new TotemDollModel(dollModel, this.textures.getArmsType().isSlim());
 
 		if (this.shouldRecreateModel) {

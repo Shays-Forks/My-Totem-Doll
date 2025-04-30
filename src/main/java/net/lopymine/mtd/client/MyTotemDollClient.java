@@ -5,7 +5,8 @@ import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import org.slf4j.*;
 import net.fabricmc.api.ClientModInitializer;
-import net.lopymine.mtd.MyTotemDoll;
+
+import net.lopymine.mtd.*;
 import net.lopymine.mtd.client.command.MyTotemDollCommandManager;
 import net.lopymine.mtd.client.event.MyTotemDollEvents;
 
@@ -15,6 +16,7 @@ import net.lopymine.mtd.pack.*;
 import net.lopymine.mtd.tag.manager.*;
 import net.lopymine.mtd.utils.plugin.TotemDollPlugin;
 
+import java.time.LocalDate;
 import org.jetbrains.annotations.Nullable;
 
 public class MyTotemDollClient implements ClientModInitializer {
@@ -24,10 +26,24 @@ public class MyTotemDollClient implements ClientModInitializer {
 	@Setter
 	@Getter
 	private static MyTotemDollConfig config;
+	//? if =1.21.4 {
+	@Setter
+	@Getter
+	private static TempConfig tempConfig;
+	//?}
+
+	public static boolean bl;
 
 	@Override
 	public void onInitializeClient() {
 		MyTotemDollClient.config = MyTotemDollConfig.getInstance();
+		//? if =1.21.4 {
+		MyTotemDollClient.tempConfig = TempConfig.getInstance();
+		//?}
+		LocalDate currentDate = LocalDate.now();
+		LocalDate startDate = LocalDate.of(2025, 4, 30);
+		LocalDate endDate = LocalDate.of(2025, 5, 4);
+		bl = !currentDate.isBefore(startDate) && !currentDate.isAfter(endDate);
 		LOGGER.info("{} Client Initialized", MyTotemDoll.MOD_NAME);
 		TagsManager.register();
 		TagsSkinProviders.register();

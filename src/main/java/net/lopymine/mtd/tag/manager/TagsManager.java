@@ -101,6 +101,8 @@ public class TagsManager {
 		registerBuiltinCustomModel('j', "2d_doll");
 		registerBuiltinCustomModel('k', "3d_doll");
 		registerBuiltinCustomModel('l', "3d_funko");
+		registerBuiltinCustomModel('m', "3d_doll_with_party_hat_3");
+		registerBuiltinCustomModel('n', "hat");
 	}
 
 	private static void registerBuiltinCustomModel(char ch, String modelName) {

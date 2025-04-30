@@ -1,1 +1,3 @@
-- Fixed sodium mixins again (compat with Sodium + Iris + My Totem Doll)
+- Fixed standard vanilla totem model issue
+- Added options to disable support for other totems
+- Other little fixes

@@ -66,7 +66,7 @@ public class PlayerSkinUtils {
 			download = PlayerSkinTextureDownloader.remapTexture(download, uri);
 		}
 		NativeImage image = download;
-		return () -> new NativeImageBackedTexture(/*? if >=1.21.5 {*/ id::toString, /*?}*/ image);
+		return () -> new NativeImageBackedTexture(/*? if >=1.21.5 {*/ /*id::toString, *//*?}*/ image);
 		//?} else {
 		/*return () -> new PlayerSkinTexture(path.toFile(), uri, DefaultSkinHelper.getTexture(), true, () -> {
 			try {
@@ -133,7 +133,7 @@ public class PlayerSkinUtils {
 			return id;
 		}
 		NativeImage remapped = remapTextureToStandardSize(image, false);
-		textureManager.registerTexture(identifier, new NativeImageBackedTexture(/*? if >=1.21.5 {*/ identifier::toString, /*?}*/ remapped));
+		textureManager.registerTexture(identifier, new NativeImageBackedTexture(/*? if >=1.21.5 {*/ /*identifier::toString, *//*?}*/ remapped));
 		return identifier;
 	}
 

@@ -26,7 +26,7 @@ import java.util.function.Supplier;
 public class ItemModelManagerMixin {
 
 	//? if >=1.21.5 {
-	@Inject(at = @At("HEAD"), method = "update")
+	/*@Inject(at = @At("HEAD"), method = "update")
 	private void capture(ItemRenderState renderState, ItemStack stack, ItemDisplayContext displayContext, World world, LivingEntity entity, int seed, CallbackInfo ci) {
 		this.captureEntity(stack, entity, renderState);
 	}
@@ -35,8 +35,8 @@ public class ItemModelManagerMixin {
 	private Object wrap(ItemStack stack, ComponentType<?> componentType, Operation<?> original) {
 		return this.changeModel(stack, () -> original.call(stack, componentType));
 	}
-	//?} else {
-	/*@Inject(at = @At("HEAD"), method = "update(Lnet/minecraft/client/render/item/ItemRenderState;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ModelTransformationMode;Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;I)V")
+	*///?} else {
+	@Inject(at = @At("HEAD"), method = "update(Lnet/minecraft/client/render/item/ItemRenderState;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ModelTransformationMode;Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;I)V")
 	private void capture(ItemRenderState renderState, ItemStack stack, ModelTransformationMode transformationMode, World world, LivingEntity entity, int seed, CallbackInfo ci) {
 		this.captureEntity(stack, entity, renderState);
 	}
@@ -45,7 +45,7 @@ public class ItemModelManagerMixin {
 	private Object wrap(ItemStack stack, ComponentType<?> componentType, Operation<?> original) {
 		return this.changeModel(stack, () -> original.call(stack, componentType));
 	}
-	*///?}
+	//?}
 
 	@Unique
 	private Object changeModel(ItemStack stack, Supplier<Object> supplier) {

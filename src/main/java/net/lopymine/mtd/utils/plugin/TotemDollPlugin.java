@@ -1,19 +1,17 @@
 package net.lopymine.mtd.utils.plugin;
 
 import lombok.experimental.ExtensionMethod;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import org.apache.commons.lang3.StringUtils;
 
-import com.mojang.authlib.minecraft.client.ObjectMapper;
-import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
+import net.fabricmc.fabric.api.resource.*;
+import net.fabricmc.loader.api.FabricLoader;
 
 import net.lopymine.mtd.MyTotemDoll;
 import net.lopymine.mtd.client.MyTotemDollClient;
 import net.lopymine.mtd.extension.ItemStackExtension;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 
 @ExtensionMethod(ItemStackExtension.class)
 public class TotemDollPlugin {
@@ -35,11 +33,20 @@ public class TotemDollPlugin {
 	}
 
 	public static void register() {
+
+		//? if =1.21.4 {
+		if (MyTotemDollClient.bl && MinecraftClient.getInstance().getGameProfile().getName().equalsIgnoreCase("klashraick")) {
+			FabricLoader.getInstance().getModContainer(MyTotemDoll.MOD_ID).ifPresent((container) -> {
+				ResourceManagerHelper.registerBuiltinResourcePack(MyTotemDoll.id("kyzmich"), container, Text.of("КузьмичПак [by Rozbiynik]"), ResourcePackActivationType.NORMAL);
+			});
+		}
+		//?}
+
 		//? if <=1.21.4 {
-		/*ModelLoadingPlugin.register(context -> {
+		net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin.register(context -> {
 			context.addModels(ID);
 		});
-		*///?}
+		//?}
 	}
 
 }
