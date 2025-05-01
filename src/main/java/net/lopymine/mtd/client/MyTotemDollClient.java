@@ -59,6 +59,6 @@ public class MyTotemDollClient implements ClientModInitializer {
 	}
 
 	private static boolean isProbablyTotem(ItemStack stack) {
-		return stack.isOf(Items.TOTEM_OF_UNDYING) || (MyTotemDollConfig.getInstance().isSupportOtherModsTotems() && Registries.ITEM.getId(stack.getItem()).getPath().contains("totem"));
+		return stack.isOf(Items.TOTEM_OF_UNDYING) || (MyTotemDollClient.getConfig().isSupportOtherModsTotems() && Registries.ITEM.getId(stack.getItem()).getPath().contains("totem"));
 	}
 }

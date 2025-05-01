@@ -1,3 +1,1 @@
-- Fixed standard vanilla totem model issue
-- Added options to disable support for other totems
-- Other little fixes
+- Fixed FPS drop issue
