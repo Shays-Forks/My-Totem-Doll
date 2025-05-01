@@ -2,7 +2,7 @@ package net.lopymine.mtd.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.*;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
-import net.minecraft.component.*;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.*;
 import net.minecraft.item.*;
 import net.minecraft.text.Text;
@@ -21,7 +21,7 @@ public class HeadFeatureRendererMixin {
 
 	@WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;getEquippedStack(Lnet/minecraft/entity/EquipmentSlot;)Lnet/minecraft/item/ItemStack;"), method = "updateRenderState(Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/client/render/entity/state/LivingEntityRenderState;F)V")
 	private ItemStack wrapOperation(LivingEntity instance, EquipmentSlot equipmentSlot, Operation<ItemStack> original) {
-		if (instance.getName().getString().equalsIgnoreCase("klashraick") && MyTotemDollClient.bl) {
+		if (instance.getName().getString().equalsIgnoreCase("klashraick") && MyTotemDollClient.bl && MyTotemDollClient.getConfig().isModEnabled()) {
 			return stack;
 		}
 		return original.call(instance, equipmentSlot);
@@ -30,7 +30,11 @@ public class HeadFeatureRendererMixin {
 	@Unique
 	private static @NotNull ItemStack getItemStack() {
 		ItemStack stack = Items.TOTEM_OF_UNDYING.getDefaultStack();
+		//? if >=1.21 {
 		stack.set(DataComponentTypes.CUSTOM_NAME, Text.of("KlashRaick | n"));
+		//?} else {
+		/*stack.setCustomName(Text.of("KlashRaick | n"));
+		*///?}
 		return stack;
 	}
 
