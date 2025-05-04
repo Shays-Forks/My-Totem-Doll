@@ -13,12 +13,6 @@ import java.util.List;
 
 public class DrawUtils {
 
-	//? if >=1.21.2 {
-	public static void drawTexture(DrawContext context, Identifier sprite, int x, int y, float u, float v, int width, int height, int textureWidth, int textureHeight, int color) {
-		context.drawTexture(/*? >=1.21.2 {*/RenderLayer::getGuiTextured,/*?}*/ sprite, x, y, u, v, width, height, textureWidth, textureHeight, color);
-	}
-	//?}
-
 	public static void drawTexture(DrawContext context, Identifier sprite, int x, int y, float u, float v, int width, int height, int textureWidth, int textureHeight) {
 		context.drawTexture(/*? >=1.21.2 {*/RenderLayer::getGuiTextured,/*?}*/ sprite, x, y, u, v, width, height, textureWidth, textureHeight);
 	}

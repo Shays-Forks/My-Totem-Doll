@@ -36,11 +36,7 @@
 	    "HandledScreenMixin",
 	    "MinecraftClientMixin",
 	    "ResourceTextureMixin",
-	    "TextureManagerMixin",
-	    //? if =1.21.4 {
-	    /*"TitleScreenMixin",
-		*///?}
-	    "HeadFeatureRendererMixin"
+	    "TextureManagerMixin"
     ],
     "injectors": {
         "defaultRequire": 1

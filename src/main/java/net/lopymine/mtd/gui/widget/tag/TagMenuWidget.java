@@ -43,7 +43,7 @@ public class TagMenuWidget extends ListWithStaticHeaderWidget<TagRow> {
 			this.addEntry(new TagRow(widgets));
 		}
 
-		List<CustomModelTag> customModelIds = TagsManager.getCustomModelIdsTags().values().stream().filter(tag -> tag.getTag() != 'm' && tag.getTag() != 'n').toList();
+		List<CustomModelTag> customModelIds = TagsManager.getCustomModelIdsTags().values().stream().toList();
 		if (!customModelIds.isEmpty()) {
 			this.addEntry(new SeparatorRow(MyTotemDoll.text("tag_menu.custom_models.title")));
 		}
