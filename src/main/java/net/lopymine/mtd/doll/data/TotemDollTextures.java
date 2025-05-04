@@ -33,6 +33,7 @@ public class TotemDollTextures {
 	@Nullable
 	private Identifier elytraTexture;
 
+	private TotemDollArmsType standardArmsType;
 	private TotemDollArmsType armsType;
 
 	public TotemDollTextures(@Nullable Identifier skinTexture, @Nullable Identifier capeTexture, @Nullable Identifier elytraTexture, TotemDollArmsType armsType) {
@@ -58,6 +59,21 @@ public class TotemDollTextures {
 
 		totemDollTextures.setState(LoadingState.DOWNLOADED);
 		return totemDollTextures;
+	}
+
+	public void setStandardArmsType(TotemDollArmsType standardArmsType) {
+		this.armsType = standardArmsType;
+		this.standardArmsType = standardArmsType;
+	}
+
+	public TotemDollArmsType getArmsType() {
+		return this.armsType == null ?
+				this.standardArmsType == null ?
+						TotemDollArmsType.WIDE
+						:
+						this.standardArmsType
+				:
+				this.armsType;
 	}
 
 	public @NotNull Identifier getSkinTexture() {
@@ -113,5 +129,9 @@ public class TotemDollTextures {
 		TotemDollTextures totemDollTextures = new TotemDollTextures(this.skinTexture, this.capeTexture, this.elytraTexture, this.armsType);
 		totemDollTextures.setState(this.state);
 		return totemDollTextures;
+	}
+
+	public void refreshBeforeRendering() {
+		this.armsType = this.standardArmsType;
 	}
 }

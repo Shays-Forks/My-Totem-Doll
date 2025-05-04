@@ -1,11 +1,8 @@
 package net.lopymine.mtd.doll.data;
 
 import lombok.*;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 
-import net.lopymine.mtd.MyTotemDoll;
-import net.lopymine.mtd.client.MyTotemDollClient;
 import net.lopymine.mtd.doll.model.TotemDollModel;
 import net.lopymine.mtd.model.base.MModel;
 import net.lopymine.mtd.model.bb.manager.BlockBenchModelManager;
@@ -51,22 +48,39 @@ public class TotemDollData {
 		if (model == null) {
 			BlockBenchModelManager.getModelAsyncAsResponse(id, (response) -> {
 				if (!response.isEmpty()) {
-					MModel value = response.value();
-					this.tempModels.put(id, value);
-					this.currentTempMModel = value;
+					MModel tempMModel = response.value();
+					this.tempModels.put(id, tempMModel);
+					this.setCurrentTempMModel(tempMModel);
 				}
 			});
 			return;
 		}
-		this.currentTempMModel = model;
+		this.setCurrentTempMModel(model);
+	}
+
+	public void setCurrentTempMModel(@Nullable MModel currentTempMModel) {
+		this.currentTempMModel = currentTempMModel;
+		TotemDollModel tempModel = this.getOrCreateOrUpdateTempModelWithTempMModel();
+		if (tempModel != null && this.model != null) {
+			tempModel.setSlim(this.model.isSlim());
+		}
+	}
+
+	@Nullable
+	private TotemDollModel getOrCreateOrUpdateTempModelWithTempMModel() {
+		if (this.currentTempMModel != null) {
+			if (this.currentTempModel == null || !this.currentTempModel.getMain().equals(this.currentTempMModel)) {
+				return this.currentTempModel = new TotemDollModel(this.currentTempMModel, this.textures.getArmsType().isSlim());
+			}
+			return this.currentTempModel;
+		}
+		return null;
 	}
 
 	public TotemDollModel getModel() {
-		if (this.currentTempMModel != null) {
-			if (this.currentTempModel == null || !this.currentTempModel.getMain().equals(this.currentTempMModel)) {
-				this.currentTempModel = new TotemDollModel(this.currentTempMModel, this.textures.getArmsType().isSlim());
-			}
-			return this.currentTempModel;
+		TotemDollModel tempModel = this.getOrCreateOrUpdateTempModelWithTempMModel();
+		if (tempModel != null) {
+			return tempModel;
 		}
 
 		if (this.model != null && !this.shouldRecreateModel) {
@@ -74,7 +88,6 @@ public class TotemDollData {
 		}
 
 		MModel dollModel = TotemDollModel.createDollModel();
-
 		this.model = new TotemDollModel(dollModel, this.textures.getArmsType().isSlim());
 
 		if (this.shouldRecreateModel) {
@@ -93,7 +106,10 @@ public class TotemDollData {
 	}
 
 	public void clearCurrentTempModel() {
-		this.currentTempMModel = null;
+		if (this.currentTempModel != null) {
+			this.currentTempModel.resetPartsVisibility();
+		}
+		this.setCurrentTempMModel(null);
 	}
 
 	public void clearAllTempModels() {
@@ -110,6 +126,7 @@ public class TotemDollData {
 		this.clearCurrentTempTextures();
 		this.clearCurrentTempModel();
 		TotemDollTextures textures = this.getTextures();
+		textures.refreshBeforeRendering();
 		TotemDollModel model = this.getModel();
 		model.apply(textures);
 		return this;

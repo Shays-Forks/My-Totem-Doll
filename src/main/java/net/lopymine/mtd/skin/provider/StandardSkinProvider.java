@@ -110,7 +110,8 @@ public abstract class StandardSkinProvider implements SkinProvider {
 					return;
 				}
 
-				textures.setArmsType(TotemDollArmsType.of(parsedSkinData.isSlim()));
+				TotemDollArmsType armsType = TotemDollArmsType.of(parsedSkinData.isSlim());
+				textures.setStandardArmsType(armsType);
 
 				Identifier skinId = this.getSkinId(value);
 

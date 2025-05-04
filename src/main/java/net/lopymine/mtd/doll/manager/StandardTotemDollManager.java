@@ -8,7 +8,7 @@ import net.lopymine.mtd.client.MyTotemDollClient;
 
 
 import net.lopymine.mtd.config.MyTotemDollConfig;
-import net.lopymine.mtd.config.totem.TotemDollSkinType;
+import net.lopymine.mtd.config.totem.*;
 import net.lopymine.mtd.doll.data.*;
 import net.lopymine.mtd.skin.provider.extended.MojangSkinProvider;
 import net.lopymine.mtd.utils.plugin.TotemDollPlugin;
@@ -47,7 +47,8 @@ public class StandardTotemDollManager {
 
 	public static TotemDollData applyConfigValues(TotemDollData data) {
 		MyTotemDollConfig config = MyTotemDollClient.getConfig();
-		data.getTextures().setArmsType(config.getStandardTotemDollArmsType());
+		TotemDollArmsType armsType = config.getStandardTotemDollArmsType();
+		data.getTextures().setStandardArmsType(armsType);
 		return data;
 	}
 

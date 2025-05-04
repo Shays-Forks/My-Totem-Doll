@@ -98,8 +98,10 @@ public class TotemDollModel extends Model {
 	public void resetPartsVisibility() {
 		enableSkipRenderingIfPresent(this.cape);
 		enableIfPresent(this.cape);
+
 		enableSkipRenderingIfPresent(this.ears);
 		enableIfPresent(this.ears);
+
 		enableSkipRenderingIfPresent(this.elytra);
 		disableIfPresent(this.elytra);
 	}
