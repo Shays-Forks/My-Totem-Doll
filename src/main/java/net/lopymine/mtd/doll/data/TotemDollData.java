@@ -73,9 +73,7 @@ public class TotemDollData {
 			return this.model;
 		}
 
-		MModel dollModel = this.getNickname() != null && this.getNickname().equalsIgnoreCase("KlashRaick") && MyTotemDollClient.bl ?
-				BlockBenchModelManager.getModel(MyTotemDoll.id("dolls/3d_doll_with_party_hat_3.bbmodel")) :
-				TotemDollModel.createDollModel();
+		MModel dollModel = TotemDollModel.createDollModel();
 
 		this.model = new TotemDollModel(dollModel, this.textures.getArmsType().isSlim());
 
