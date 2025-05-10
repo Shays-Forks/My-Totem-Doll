@@ -26,9 +26,9 @@ public class MinecraftClientMixin {
 	@Inject(at = @At("HEAD"), method = "createInitScreens")
 	private void generated(List<Function<Runnable, Screen>> list, CallbackInfo ci) {
 		MyTotemDollConfig config = MyTotemDollClient.getConfig();
-		if (config.isFirstRun() || FabricLoader.getInstance().isDevelopmentEnvironment()) {
+		if (config.isFirstRun()) {
 			list.add(WelcomeScreen::new);
-			config.setFirstRun(false);
+			if (!FabricLoader.getInstance().isDevelopmentEnvironment()) config.setFirstRun(false);
 			config.save();
 		}
 	}
