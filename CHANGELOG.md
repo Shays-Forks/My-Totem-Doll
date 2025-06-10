@@ -1,2 +1,1 @@
-- Fixed some annoying issues with doll tags
-- Little bit optimized doll rendering (there will be more in the future)
+- Fixed issue with registering standard doll skins when using "File Skin" or "URL Skin"
