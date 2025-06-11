@@ -38,7 +38,8 @@ public class MojangAPI {
 		int statusCode = -1;
 		String responseBody = "Not reached";
 
-		try (HttpClient httpClient = HttpClient.newHttpClient()) {
+		try {
+			HttpClient httpClient = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder()
 					.uri(URI.create(getUUIDEndpoint(nickname)))
 					.build();
@@ -117,7 +118,8 @@ public class MojangAPI {
 
 	@Nullable
 	public static Response<ParsedSkinData> getSkinData(UUID uuid, String nickname) {
-		try (HttpClient httpClient = HttpClient.newHttpClient()) {
+		try {
+			HttpClient httpClient = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder()
 					.uri(URI.create(String.format("https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false", uuid.toString())))
 					.build();
