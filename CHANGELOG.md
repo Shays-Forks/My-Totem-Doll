@@ -1,1 +1,1 @@
-- Fixed issue with registering standard doll skins when using "File Skin" or "URL Skin"
+- Fixed issue with skin loading (using another Mojang API)

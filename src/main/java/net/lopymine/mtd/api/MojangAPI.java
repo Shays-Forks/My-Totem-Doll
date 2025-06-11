@@ -24,17 +24,27 @@ public class MojangAPI {
 
 	private static final Gson GSON = new GsonBuilder().setLenient().disableHtmlEscaping().create();
 
-	public static Response<UUID> getUUID(String nickname) {
+	public static boolean useFallbackAPI = false;
+
+	private static String getUUIDEndpoint(String nickname) {
+		if (MojangAPI.useFallbackAPI) {
+			return "https://api.mojang.com/users/profiles/minecraft/" + nickname;
+		}
+		return "https://api.minecraftservices.com/minecraft/profile/lookup/name/" + nickname;
+	}
+
+	public static Response<UUID> getUUID(String nickname, boolean canRetry) {
 		boolean debugLogEnabled = MyTotemDollClient.getConfig().isDebugLogEnabled();
 		int statusCode = -1;
+		String responseBody = "Not reached";
 
-		try {
-			HttpClient httpClient = HttpClient.newHttpClient();
+		try (HttpClient httpClient = HttpClient.newHttpClient()) {
 			HttpRequest request = HttpRequest.newBuilder()
-					.uri(URI.create("https://api.mojang.com/users/profiles/minecraft/" + nickname))
+					.uri(URI.create(getUUIDEndpoint(nickname)))
 					.build();
 			HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
 			statusCode = response.statusCode();
+			responseBody = response.body();
 
 			if (statusCode == 429) {
 				if (debugLogEnabled) {
@@ -73,13 +83,23 @@ public class MojangAPI {
 		} catch (InterruptedException ignored) {
 		} catch (Exception e) {
 			MyTotemDollClient.LOGGER.error("Failed to get UUID: ", e);
+			MyTotemDollClient.LOGGER.error("Response Body: ");
+			MyTotemDollClient.LOGGER.error(responseBody);
+		}
+
+		if (statusCode == 403) {
+			MyTotemDollClient.LOGGER.error("Received 403 status code, using fallback API for UUIDs!");
+			MojangAPI.useFallbackAPI = true;
+			if (canRetry) {
+				return getUUID(nickname, false);
+			}
 		}
 
 		return Response.empty(statusCode);
 	}
 
 	public static Response<ParsedSkinData> getSkinData(String nickname) {
-		Response<UUID> response = MojangAPI.getUUID(nickname);
+		Response<UUID> response = MojangAPI.getUUID(nickname, true);
 		if (response.statusCode() == -1 && response.isEmpty()) { // Other errors
 			return Response.empty(response.statusCode());
 		}
@@ -97,8 +117,7 @@ public class MojangAPI {
 
 	@Nullable
 	public static Response<ParsedSkinData> getSkinData(UUID uuid, String nickname) {
-		try {
-			HttpClient httpClient = HttpClient.newHttpClient();
+		try (HttpClient httpClient = HttpClient.newHttpClient()) {
 			HttpRequest request = HttpRequest.newBuilder()
 					.uri(URI.create(String.format("https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false", uuid.toString())))
 					.build();

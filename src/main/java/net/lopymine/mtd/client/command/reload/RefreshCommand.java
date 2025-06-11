@@ -8,7 +8,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 
-import net.lopymine.mtd.client.MyTotemDollClient;
+import net.lopymine.mtd.api.MojangAPI;
 import net.lopymine.mtd.client.command.builder.CommandTextBuilder;
 import net.lopymine.mtd.doll.manager.TotemDollManager;
 
@@ -43,6 +43,8 @@ public class RefreshCommand {
 			Text endFeedback = CommandTextBuilder.startBuilder("command.refresh.all.end", seconds).build();
 			context.getSource().sendFeedback(endFeedback);
 		});
+
+		MojangAPI.useFallbackAPI = false;
 
 		return Command.SINGLE_SUCCESS;
 	}
